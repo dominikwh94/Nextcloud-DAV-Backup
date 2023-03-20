@@ -5,15 +5,24 @@ currentTime=$(date +'%Y%m%d_%H%M%S')
 targetDirectory="/tmp/dav" # Change to your path
 
 ncUsername=""
-ncPasswd="" # Use App-Password for security reasons
-ncCalendar=""
+ncPassword="" # Use App-Password for security reasons
 
-davUrl="https://NEXTCLOUD-ADDRESS/remote.php/dav/calendars/$ncUsername/$ncCalendar/?export" # Edit NEXTCLOUD-ADDRESS to your address
-outputFile="$targetDirectory/$currentTime-calendar-$ncCalendar.ics"
+ncCalendars=( \
+    "personal" \
+    "geburtstage" \
+    )
 
-wget \
-    --output-document="$outputFile" \
-    --auth-no-challenge \
-    --http-user="$ncUsername" \
-    --http-password="$ncPasswd" \
-    $davUrl
+
+for i in "${ncCalendars[@]}"
+do
+    davUrl="https://NEXTCLOUD-ADDRESS/remote.php/dav/calendars/$ncUsername/$i/?export" # Edit NEXTCLOUD-ADDRESS to your address
+    outputFile="$targetDirectory/$currentTime-calendar-$i.ics"
+    echo $davUrl
+    echo $outputFile
+    wget \
+        --output-document="$outputFile" \
+        --auth-no-challenge \
+        --http-user="$ncUsername" \
+        --http-password="$ncPassword" \
+        $davUrl
+done
