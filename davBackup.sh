@@ -10,7 +10,7 @@ ncPassword="" # Use App-Password for security reasons
 ncCalendars=( \
     "personal" \
     "geburtstage" \
-    )
+    ) # Replace with your calendars
 
 
 for i in "${ncCalendars[@]}"
